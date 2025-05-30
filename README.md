@@ -70,10 +70,6 @@ The processor is implemented entirely in Verilog, structured in a modular and sy
 
   - Synthesizable design, compatible with FPGA platforms like ZedBoard, Spartan-3, or Virtex-7
 
-## RTL
-
-<img width="945" alt="image" src="https://github.com/user-attachments/assets/d48fa1df-11a1-4995-bd7f-9067d15d9fa5" />
-
 
 ## Usage Note
 
