@@ -74,7 +74,9 @@ The processor is implemented entirely in Verilog, structured in a modular and sy
 
 <img width="946" alt="rv32if_rtl" src="https://github.com/user-attachments/assets/0aa6b1aa-464b-4d63-bb5e-363b3b5e0d3f" />
 
+## Usage Note
 
+- The floating point instruction flw.s stalls the i-class pipeline as soon as it reaches ex stage of floating point pipeline so that overwriting by i-class sw could be avoided 
 
 ## Tools & Technologies
 
