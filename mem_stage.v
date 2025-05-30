@@ -36,12 +36,12 @@ assign safe_mem_write = mem_write && !stall_sw_due_to_flw;
 
 assign mem_stall = stall_sw_due_to_flw;//going to ex stage to stall all results until this store word completes
 
-// Step 2: Modify memory instantiation
+
 data_mem dm(
     .clk(clk),
     .mem_enable(mem_enable), 
     .mem_read(mem_read), 
-    .mem_write(safe_mem_write),  // ✅ safe version
+    .mem_write(safe_mem_write),  //  safe version
     .write_data(write_data), 
     .address(address), 
     .mem_data_out(mem_data_wire),
