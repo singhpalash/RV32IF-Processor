@@ -72,7 +72,8 @@ The processor is implemented entirely in Verilog, structured in a modular and sy
 
 ## RTL
 
-<img width="946" alt="rv32if_rtl" src="https://github.com/user-attachments/assets/0aa6b1aa-464b-4d63-bb5e-363b3b5e0d3f" />
+<img width="945" alt="image" src="https://github.com/user-attachments/assets/d48fa1df-11a1-4995-bd7f-9067d15d9fa5" />
+
 
 ## Usage Note
 
