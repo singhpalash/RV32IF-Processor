@@ -2,10 +2,11 @@
 
 module testing_core_top(
     input wire clk, 
-    input wire rst
+    input wire rst,
+    output wire just_for_checking
 );
 
-
+    
     // IF Stage Outputs
     wire [31:0] pc_out;        // Current PC value
     wire [31:0] instr_out;     // Instruction fetched from memory
@@ -125,6 +126,16 @@ module testing_core_top(
    wire [1:0] forward_a, forward_b;
    wire [31:0] fwd_a,fwd_b;
    
+   //fwd unit outputs and inputs of fclass//
+    wire [4:0] rs1_f_fwd;
+    wire [4:0] rs2_f_fwd;
+    wire [4:0] rd_f_fwd;
+    wire [31:0] fwd_a_f;
+    wire [31:0] fwd_b_f;
+    wire [1:0] fwd_a_sel;
+    wire [1:0] fwd_b_sel;
+    wire stall;
+   
    // wb stage outputs//
    
    wire [4:0] rd_out;
@@ -232,6 +243,7 @@ module testing_core_top(
     .rst(rst),
     .read_regport_f1(read_regport_f1_out),
     .read_regport_f2(read_regport_f2_out),
+    .stall_from_fwd(stall),
     .mem_enable_f_out(mem_enable_f_out),
     .mem_write_f_out(mem_write_f_out),
     .wb_enable_f_out(wb_enable_f_out),
@@ -255,15 +267,25 @@ module testing_core_top(
     .func_data_f_out(func_data_f_out),
     .func_7_f_out(func_7_f_out),
     .rs1_data_f_out(rs1_data_f_out),
-    .rs2_data_f_out(rs2_data_f_out)
+    .rs2_data_f_out(rs2_data_f_out),
+    .rs1_f_fwd(rs1_f_fwd),
+    .rs2_f_fwd(rs2_f_fwd),
+    .rd_f_fwd(rd_f_fwd)
 );
+
+
   
   
   fp_ex_stage fpu_ex_inst (
     .clk(clk),
     .rst(rst),
-    .a_f(rs1_data_f_out),
-    .b_f(rs2_data_f_out),
+    .a_in(rs1_data_f_out),
+    .b_in(rs2_data_f_out),
+    .fwd_a(fwd_a_f),
+    .fwd_b(fwd_b_f),
+    .fwd_a_sel(fwd_a_sel),
+    .fwd_b_sel(fwd_a_sel),
+    
     .op_code_f(opcode_f_out),
     .func_f(func_data_f_out),
     .func_7_f(func_7_f_out),
@@ -278,6 +300,32 @@ module testing_core_top(
     .result_f(result_f),
     .data_for_writing_to_mem(data_for_writing_to_mem),
     .flag_done(flag_done)
+);
+
+fwd_unit_f fp_fwd( .rs1_id(rs1_f_fwd),
+     .rs2_id(rs2_f_fwd),
+     .result_ex(result_f),
+     .result_mem(result_f_wb),
+     .rd_ex(rd_temp_f_out_mem),
+     .rd_mem(rd_temp_f_out_wb),
+    
+
+     .reg_write_ex(wb_enable_f_out_mem),
+     .reg_write_mem(wb_enable_f_out_wb),
+    
+
+    // indicates whether EX-stage result is available for forwarding
+    // (for most pipelined ALUs this is 1; for long-latency units like FDIV it might be 0 until done)
+     .ex_result_ready(flag_done),
+
+    // optionally gate forwarding only for FP instructions in ID
+      
+
+    .forward_a_sel(fwd_a_sel), // for operand A (rs1)
+    .forward_b_sel(fwd_b_sel), // for operand B (rs2)
+    .stall(stall),
+    .fwd_a(fwd_a_f),
+    .fwd_b(fwd_b_f)
 );
    
    
@@ -407,7 +455,7 @@ module testing_core_top(
         .reg_write_enable(reg_write_enable)
     );
     
-    
+    assign just_for_checking=branch_enable;
     
     
 endmodule
