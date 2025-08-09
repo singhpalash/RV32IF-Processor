@@ -1,5 +1,5 @@
 # RV32IF
-Design and implementation of RV32IF
+Design and implementation of RV32IF Processor
  ## INTRODUCTION
 This project presents the design and implementation of an RV32IF pipelined processor based on the RISC-V architecture. It includes full support for RV32I (integer instructions) and is being extended to support RV32F (floating-point instructions).
 
