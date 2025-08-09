@@ -52,7 +52,7 @@ The processor is implemented entirely in Verilog, structured in a modular and sy
 
   - The current design has inorder f class with future work looking to incorporate out-of-order f class to reduce latency.
 
-  - This inorder f-class pipeline uses stall for long latency operations like multiply and divison.
+  - This inorder f-class pipeline is well balanced as each arithmetic instruction takes exactly 5 cycles
 
   - Also the floating point alu in itself is pipelined.
 
@@ -60,7 +60,7 @@ The processor is implemented entirely in Verilog, structured in a modular and sy
 
   - Basic data forwarding and hazard detection implemented for RV32I
 
-  - Floating-point hazard handling will be handled via Tomasulo’s mechanism
+  - Floating-point dependency hazard is handled using stall and then forwarding 
 
  ### 7) Memory modules:
 
@@ -84,16 +84,3 @@ The processor is implemented entirely in Verilog, structured in a modular and sy
 - Synthesis: Xilinx Vivado
 
 - Target FPGAs: ZedBoard, Spartan-3, Virtex-7
-
-## Future Work
-
- - Tomasulo’s algorithm for dynamic scheduling of RV32F instructions
-
- - Scoreboarding and reservation stations for FP execution
-
- - Stall and replay handling for out-of-order floating-point instructions
-
- - Formal verification using assertion-based testbenches
-
-
-
